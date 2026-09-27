@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopPulse - Modern E-Commerce</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- AUTH SECTION -->
+    <div id="auth-section" class="auth-container">
+        <div class="auth-card">
+            <h2>⚡ ShopPulse</h2>
+            <p id="auth-subtitle">Sign in to your store account</p>
+            <form id="auth-form">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Enter username" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <div id="admin-checkbox-group" class="input-group checkbox-group hidden">
+                    <label><input type="checkbox" id="is-admin-reg"> Register as Admin</label>
+                </div>
+                <button type="submit" id="auth-btn" class="btn primary">Login</button>
+            </form>
+            <p class="switch-text" id="auth-switch-text">Don't have an account? <a href="#" id="switch-mode">Register</a></p>
+        </div>
+    </div>
+
+    <!-- STORE DASHBOARD SECTION -->
+    <div id="dashboard-section" class="dashboard-container hidden">
+        <!-- Navbar -->
+        <header class="navbar">
+            <div class="nav-brand">⚡ ShopPulse</div>
+            <div class="nav-right">
+                <span id="logged-in-user">👤 User</span>
+                <button id="view-orders-btn" class="btn secondary">My Orders</button>
+                <button id="cart-btn" class="btn secondary">🛒 Cart (<span id="cart-count">0</span>)</button>
+                <button id="logout-btn" class="btn danger">Logout</button>
+            </div>
+        </header>
+
+        <!-- Main Store View -->
+        <main class="main-content">
+            <div class="store-header">
+                <h2>Product Catalog</h2>
+                <div id="admin-add-product-container" class="hidden">
+                    <button id="open-add-product-modal" class="btn primary">+ Add Product (Admin)</button>
+                </div>
+            </div>
+
+            <div class="products-grid" id="products-grid">
+                <!-- Products dynamically loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- CART MODAL -->
+    <div id="cart-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Your Shopping Cart</h3>
+                <button id="close-cart" class="close-btn">&times;</button>
+            </div>
+            <div id="cart-items-list" class="cart-items-list">
+                <!-- Cart items here -->
+            </div>
+            <div class="cart-footer">
+                <h3>Total: $<span id="cart-total">0.00</span></h3>
+                <button id="checkout-btn" class="btn primary full">Checkout Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDERS MODAL -->
+    <div id="orders-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Order History & Tracking</h3>
+                <button id="close-orders" class="close-btn">&times;</button>
+            </div>
+            <div id="orders-list" class="orders-list">
+                <!-- Orders here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD PRODUCT MODAL (Admin) -->
+    <div id="product-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Product</h3>
+                <button id="close-product-modal" class="close-btn">&times;</button>
+            </div>
+            <form id="add-product-form">
+                <div class="input-group">
+                    <label>Product Title</label>
+                    <input type="text" id="prod-title" required>
+                </div>
+                <div class="input-group">
+                    <label>Description</label>
+                    <textarea id="prod-desc" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Price ($)</label>
+                    <input type="number" id="prod-price" step="0.01" required>
+                </div>
+                <div class="input-group">
+                    <label>Category</label>
+                    <input type="text" id="prod-category" required>
+                </div>
+                <div class="input-group">
+                    <label>Image URL</label>
+                    <input type="text" id="prod-image" placeholder="https://...">
+                </div>
+                <button type="submit" class="btn primary full">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
