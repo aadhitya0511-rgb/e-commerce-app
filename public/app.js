@@ -150,17 +150,21 @@ function renderProducts() {
         productsGrid.innerHTML = '<p>No products available. Add some as an Admin!</p>';
         return;
     }
+    const role = localStorage.getItem('role');
     products.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
-            <img src="${p.image}" class="product-img" alt="${p.title}">
+            <img src="${p.image || 'https://via.placeholder.com/150'}" class="product-img" alt="${p.title}">
             <div class="product-info">
                 <h4 class="product-title">${p.title}</h4>
                 <p class="product-desc">${p.description || 'No description'}</p>
                 <div class="product-footer">
                     <span class="product-price">$${p.price.toFixed(2)}</span>
-                    <button onclick="addToCart('${p._id}')" class="btn primary">Add to Cart</button>
+                    <div style="display: flex; gap: 5px;">
+                        <button onclick="addToCart('${p._id}')" class="btn primary">Add to Cart</button>
+                        ${role === 'admin' ? `<button onclick="deleteProduct('${p._id}')" style="background-color: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer;">Delete</button>` : ''}
+                    </div>
                 </div>
             </div>
         `;
@@ -277,7 +281,7 @@ function renderOrders(orders) {
     });
 }
 
-// Admin Add Product
+// Admin Add & Delete Product
 openAddProductModalBtn.addEventListener('click', () => productModal.classList.remove('hidden'));
 closeProductModalBtn.addEventListener('click', () => productModal.classList.add('hidden'));
 
@@ -308,5 +312,21 @@ addProductForm.addEventListener('submit', async (e) => {
         alert(err.message);
     }
 });
+
+window.deleteProduct = async function(productId) {
+    if (!confirm('Are you sure you want to delete this product?')) return;
+    const token = localStorage.getItem('token');
+    try {
+        const res = await fetch(`${API_URL}/products/${productId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error('Failed to delete product');
+        alert('Product deleted successfully!');
+        fetchProducts();
+    } catch (err) {
+        alert(err.message);
+    }
+};
 
 checkAuth();
